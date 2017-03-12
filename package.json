@@ -1,0 +1,23 @@
+{
+  "name": "kuri-logger",
+  "version": "1.0.0",
+  "description": "Logger made by Kurisu Brooks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeeSeal/kuri-logger.git"
+  },
+  "author": "TeeSeal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TeeSeal/kuri-logger/issues"
+  },
+  "homepage": "https://github.com/TeeSeal/kuri-logger#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "moment": "^2.17.1"
+  }
+}
