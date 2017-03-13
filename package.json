@@ -1,5 +1,5 @@
 {
-  "name": "kuri-logger",
+  "name": "logr",
   "version": "1.0.0",
   "description": "Logger made by Kurisu Brooks",
   "main": "logger.js",
@@ -19,5 +19,8 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "moment": "^2.17.1"
-  }
+  },
+  "keywords": [
+    "logger"
+  ]
 }
