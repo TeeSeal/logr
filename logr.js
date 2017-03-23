@@ -8,7 +8,7 @@ module.exports = {
 	info: (msg, name = 'info') => {
 		return log(chalk.blue, name, msg);
 	},
-	warn: (msg, name = 'warning') => {
+	warn: (msg, name = 'warn') => {
 		return log(chalk.yellow, name, msg);
 	},
 	debug: (msg, name = 'debug') => {
@@ -25,26 +25,26 @@ module.exports = {
 }
 
 function time() {
-		return moment().format("HH:mm:ss");
+	return moment().format("HH:mm:ss");
 }
 
 function log(style, name, message, stacktrace) {
-		if (typeof style !== "function") {
-				log(chalk.white, "Logger", "Missing Style Type");
-				style = chalk.white;
-		}
+	if (typeof style !== "function") {
+		log(chalk.white, "Logger", "Missing Style Type");
+		style = chalk.white;
+	}
 
-		// Log Multiple
-		if (Array.isArray(message)) {
-				for (const item of message) console.log(style.bold(`[${time()} ${name}]`), style(item));
-				return false;
-		// Log Stacktrace
-		} else if (stacktrace) {
-				console.log(style.bold(`[${time()} ${name}]`), style(message));
-				return console.trace(message);
-		// Log Normally
-		} else {
-				message = typeof message === "string" ? message.replace(/\r?\n|\r/g, " ") : message;
-				return console.log(style.bold(`[${time()} ${name}]`), style(message));
-		}
+	// Log Multiple
+	if (Array.isArray(message)) {
+		for (const item of message) console.log(style.bold(`[${time()} ${name}]`), style(item));
+		return false;
+	// Log Stacktrace
+	} else if (stacktrace) {
+		console.log(style.bold(`[${time()} ${name}]`), style(message));
+		return console.trace(message);
+	// Log Normally
+	} else {
+		message = typeof message === "string" ? message.replace(/\r?\n|\r/g, " ") : message;
+		return console.log(style.bold(`[${time()} ${name}]`), style(message));
+	}
 }
