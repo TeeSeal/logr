@@ -2,23 +2,25 @@ const chalk = require("chalk");
 const moment = require("moment");
 
 module.exports = {
-	success: (message) => {
-		return log(chalk.green, 'success', message);
+	success: (msg, name = 'success') => {
+		return log(chalk.green, name, msg);
 	},
-	info: (message) => {
-		return log(chalk.blue, '   info', message);
+	info: (msg, name = 'info') => {
+		return log(chalk.blue, name, msg);
 	},
-	warn: (message) => {
-		return log(chalk.yellow, 'warning', message);
+	warn: (msg, name = 'warning') => {
+		return log(chalk.yellow, name, msg);
 	},
-	debug: (message) => {
-		return log(chalk.magenta, '  debug', message);
+	debug: (msg, name = 'debug') => {
+		return log(chalk.magenta, name, msg);
 	},
-	error: (message, stacktrace) => {
-		return log(chalk.red, '  error', message, stacktrace);
+	error: (msg, name = 'error') => {
+		if (msg.constructor.name.includes('Error')) return log(chalk.red, msg.name, msg.message, msg.stack);
+		return log(chalk.red, name, msg);
 	},
-	fatal: (message, stacktrace) => {
-		throw log(chalk.bgRed.white, '  fatal', message, stacktrace);
+	fatal: (msg, name = 'fatal') => {
+		if (msg.constructor.name.includes('Error')) return log(chalk.red, msg.name, msg.message, msg.stack);
+		throw log(chalk.bgRed.white, name, msg);
 	}
 }
 
