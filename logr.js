@@ -2,25 +2,25 @@ const chalk = require('chalk');
 const moment = require('moment');
 
 module.exports = {
-	success: (msg, name = 'success') => {
-		return log(chalk.green, name, msg);
+	success: (info, name = 'success') => {
+		return log(chalk.green, name, info);
 	},
-	info: (msg, name = 'info') => {
-		return log(chalk.blue, name, msg);
+	info: (info, name = 'info') => {
+		return log(chalk.blue, name, info);
 	},
-	warn: (msg, name = 'warn') => {
-		return log(chalk.yellow, name, msg);
+	warn: (info, name = 'warn') => {
+		return log(chalk.yellow, name, info);
 	},
-	debug: (msg, name = 'debug') => {
-		return log(chalk.magenta, name, msg);
+	debug: (info, name = 'debug') => {
+		return log(chalk.magenta, name, info);
 	},
-	error: (msg, name = 'error', stack) => {
-		if (msg.constructor.name.includes('Error')) return log(chalk.red, msg.name, msg.message, true);
-		return log(chalk.red, name, msg, stack);
+	error: (info, name = 'error', stack) => {
+		if (info instanceof Error) return log(chalk.red, info.name, info.message, info.stack);
+		return log(chalk.red, name, info, stack);
 	},
-	fatal: (msg, name = 'fatal', stack) => {
-		if (msg.constructor.name.includes('Error')) return log(chalk.red, msg.name, msg.message, true);
-		throw log(chalk.bgRed.white, name, msg, stack);
+	fatal: (info, name = 'fatal', stack) => {
+		if (info instanceof Error) return log(chalk.bgRed.white, info.name, info.message, info.stack);
+		throw log(chalk.bgRed.white, name, info, stack);
 	}
 }
 
@@ -43,7 +43,8 @@ function log(style, name, message, stacktrace) {
 	// Log Stacktrace
 	if (stacktrace) {
 		console.log(style.bold(`[${time()} ${name}]`), style(message));
-		return console.trace(message);
+		stacktrace = stacktrace.split('\n').slice(1).join('\n');
+		return console.log(stacktrace);
 	}
 
 	// Log Normally
