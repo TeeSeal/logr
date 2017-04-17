@@ -2,25 +2,31 @@ const chalk = require('chalk');
 const moment = require('moment');
 
 module.exports = {
-	success(info, name = 'success') {
+	success(name, info) {
+		[name, info] = assign('Success', name, info);
 		return log(chalk.green, name, info);
 	},
-	info(info, name = 'info') {
+	info(name, info) {
+		[name, info] = assign('Info', name, info);
 		return log(chalk.blue, name, info);
 	},
-	warn(info, name = 'warn') {
+	warn(name, info) {
+		[name, info] = assign('Warn', name, info);
 		return log(chalk.yellow, name, info);
 	},
-	debug(info, name = 'debug') {
+	debug(name, info) {
+		[name, info] = assign('Debug', name, info);
 		return log(chalk.magenta, name, info);
 	},
-	error(info, name = 'error', stack) {
+	error(name, info) {
+		[name, info] = assign('Error', name, info);
 		if (info instanceof Error) return log(chalk.red, info.name, info.message, info.stack);
-		return log(chalk.red, name, info, stack);
+		return log(chalk.red, name, info);
 	},
-	fatal(info, name = 'fatal', stack) {
-		if (info instanceof Error) return log(chalk.bgRed.white, info.name, info.message, info.stack);
-		throw log(chalk.bgRed.white, name, info, stack);
+	fatal(name, info) {
+		[name, info] = assign('Fatal', name, info);
+		if (info instanceof Error) throw log(chalk.bgRed.white, info.name, info.message, info.stack);
+		throw log(chalk.bgRed.white, name, info);
 	}
 }
 
@@ -50,4 +56,9 @@ function log(style, name, message, stacktrace) {
 	// Log Normally
 	if (typeof message === 'string') message = message.replace(/\r?\n|\r/g, ' ');
 	return console.log(style.bold(`[${time()} ${name}]`), style(message));
+}
+
+function assign(def, name, info, stack) {
+	if (!info) return [def, name];
+	return [name, info, stack];
 }
