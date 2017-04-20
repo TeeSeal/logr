@@ -8,7 +8,7 @@ module.exports = {
 	},
 	info(name, info) {
 		[name, info] = assign('Info', name, info);
-		return log(chalk.blue, name, info);
+		return log(chalk.cyan, name, info);
 	},
 	warn(name, info) {
 		[name, info] = assign('Warn', name, info);
@@ -58,7 +58,7 @@ function log(style, name, message, stacktrace) {
 	return console.log(style.bold(`[${time()} ${name}]`), style(message));
 }
 
-function assign(def, name, info, stack) {
+function assign(def, name, info) {
 	if (!info) return [def, name];
-	return [name, info, stack];
+	return [name, info];
 }
